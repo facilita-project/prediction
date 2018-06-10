@@ -11,16 +11,14 @@ class PredictionService {
   }
 
   async predict (cnpj, value) {
-    const client = await MongoClient.connect("mongodb://erickwendel:Erick123@ds153980.mlab.com:53980/hackthonciab")
-    const collection = client.db('hackthonciab').collection('notas-fiscais')
-
-    const history = await collection.aggregate([{ $match: {'NF.nome': {$regex: cnpj}} }]).toArray()
+    const history = await this.$repository.findByCNPJ(cnpj)
 
     const dataset = history.map(item => {
       const date = item.NF.data.split('/')
       return [parseInt(date[1]), parseFloat(item.NF.valor)]
     })
 
+    console.log(dataset)
     const model = regression.linear(dataset)
     // sorry, hight level gambiarra here
     const prediction = model.predict(dataset.length)
