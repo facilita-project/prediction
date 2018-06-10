@@ -1,0 +1,3 @@
+export MONGODB_URL=mongodb://italojs2:hackciab2018@ds153980.mlab.com:53980/hackathonciab
+export EXAMS_SERVICE_URL=http://localhost:4000
+export SOC_INTEGRATION_MS_URL=http://localhost:5005
